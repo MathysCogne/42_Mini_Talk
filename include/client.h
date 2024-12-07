@@ -6,7 +6,7 @@
 /*   By: mcogne-- <mcogne--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 17:48:52 by mcogne--          #+#    #+#             */
-/*   Updated: 2024/12/07 15:57:04 by mcogne--         ###   ########.fr       */
+/*   Updated: 2024/12/07 23:43:34 by mcogne--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 
 # include "mini_talk.h"
 
-# define NAME YELLOW BOLD "[client] " C_RESET
-
 /*******************************/
 /*           CLIENT            */
 /*******************************/
 
-char	*char_to_bit(char octet);
+# define NAME YELLOW BOLD "[client] " C_RESET
+
+char	*char_to_bit(const char octet);
 
 #endif

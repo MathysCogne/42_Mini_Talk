@@ -6,7 +6,7 @@
 /*   By: mcogne-- <mcogne--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 13:46:33 by mcogne--          #+#    #+#             */
-/*   Updated: 2024/12/07 15:57:52 by mcogne--         ###   ########.fr       */
+/*   Updated: 2024/12/07 23:57:02 by mcogne--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,29 @@
 
 void	ft_put_error(char *str)
 {
-	ft_putstr_fd("Error\n", 2);
 	ft_putstr_fd(str, 2);
 }
 
 /*
-** Convertion a char in base 10 (ont Octet) to str in base 2 (one Bit)
+** Set action when received SIGUSR1 or SIGUSR2
+** Action is call signal_handler()
+*/
+void	set_signal_action(void)
+{
+	struct sigaction	act;
+
+	sigemptyset(&act.sa_mask);
+	act.sa_sigaction = &signal_handler;
+	act.sa_flags = SA_SIGINFO;
+	sigaction(SIGUSR1, &act, NULL);
+	sigaction(SIGUSR2, &act, NULL);
+}
+
+/*
+** Convertion a char in base 10 (one Octet) to str in base 2 (one Bit)
 ** - Remaind: Free return value, before use
 */
-char	*char_to_bit(char octet)
+char	*char_to_bit(const char octet)
 {
 	char	*bit;
 	int		i;

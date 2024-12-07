@@ -16,8 +16,7 @@ INCDIR = include
 #########################################
 CLIENT_NAME = client
 
-CLIENT_SRC = client.c \
-				../utils.c
+CLIENT_SRC = client.c ../utils.c
 
 CLIENT_SRCDIR = src/client/
 CLIENT_OBJDIR = $(OBJDIR)/client
@@ -29,8 +28,7 @@ CLIENT_OBJ = $(CLIENT_SRC:$(CLIENT_SRCDIR)%.c=$(CLIENT_OBJDIR)/%.o)
 #########################################
 SERVER_NAME = server
 
-SERVER_SRC = server.c \
-				../utils.c
+SERVER_SRC = server.c  ../utils.c
 
 SERVER_SRCDIR = src/server/
 SERVER_OBJDIR = $(OBJDIR)/server

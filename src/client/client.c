@@ -6,70 +6,74 @@
 /*   By: mcogne-- <mcogne--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 17:48:49 by mcogne--          #+#    #+#             */
-/*   Updated: 2024/12/07 17:15:41 by mcogne--         ###   ########.fr       */
+/*   Updated: 2024/12/08 00:48:32 by mcogne--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "client.h"
 
-short	send_bit_to_server(size_t pid, char *bit)
+static volatile sig_atomic_t	g_received = 0;
+
+void	signal_handler(int signum, siginfo_t *info, void *context)
+{
+	(void)context;
+	(void)info;
+	if (signum == SIGUSR1)
+		g_received = 1;
+	else if (signum == SIGUSR2)
+		ft_printf(NAME "Receipt notice ! Your message has been received.\n");
+}
+
+static void	send_bit_to_server(size_t pid, char *bit)
 {
 	int	i;
 
 	i = 0;
 	while (bit[i])
 	{
-		usleep(100);
+		g_received = 0;
 		if (bit[i] == '1')
-		{
-			if (kill(pid, SIGUSR1) == -1)
-			{
-				ft_printf("ERREUR LORS DE LENVOIE AVEC KILL");
-				return (1);
-			}
-		}
+			kill(pid, SIGUSR1);
 		else
-		{
-			if (kill(pid, SIGUSR2) == -1)
-			{
-				ft_printf("ERREUR LORS DE LENVOIE AVEC KILL");
-				return (1);
-			}
-		}
-		ft_printf(NAME "SEND OCTECT >> %c\n", bit[i]);
+			kill(pid, SIGUSR2);
+		while (!g_received)
+			pause();
 		i++;
 	}
-	return (0);
+	free(bit);
 }
 
-short	client(size_t pid, char *str)
+void	client(size_t pid, char *str)
 {
-	int	i;
+	size_t	i;
 
 	ft_printf(NAME "Send to %d: %s\n", pid, str);
 	i = 0;
-	while (str[i])
+	while (i <= ft_strlen(str))
 	{
-		ft_printf(NAME "SEND %c >> %s\n", str[i], char_to_bit(str[i]));
 		send_bit_to_server(pid, char_to_bit(str[i]));
 		i++;
 	}
-	return (0);
 }
 
 int	main(int argc, char **argv)
 {
-	(void)argv;
 	if (argc != 3)
 	{
-		ft_put_error(NAME "Program takes two args. Please use: ./client [PID] [STR]\n");
+		ft_put_error(NAME "Program takes two args. Please use: ./client [PID SERVER] [MESSAGE]\n");
 		return (1);
 	}
-	// TODO GERER SI LE PID N'EST PAS VALIDE
-	if (client(ft_atoi(argv[1]), argv[2]))
+	if (!argv[2] || argv[2][0] == '\0')
 	{
-		ft_put_error(NAME "DEBUG ERREUR\n");
+		ft_put_error(NAME "Message is empty. Please use: ./client [PID] [STR]\n");
 		return (1);
 	}
+	if (ft_atoi(argv[1]) <= 0 || kill(ft_atoi(argv[1]), 0))
+	{
+		ft_put_error(NAME "Invalid PID. Please use: ./client [PID SERVER] [MESSAGE]\n");
+		return (1);
+	}
+	set_signal_action();
+	client(ft_atoi(argv[1]), argv[2]);
 	return (0);
 }

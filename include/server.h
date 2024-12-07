@@ -6,7 +6,7 @@
 /*   By: mcogne-- <mcogne--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 17:48:55 by mcogne--          #+#    #+#             */
-/*   Updated: 2024/12/07 17:28:25 by mcogne--         ###   ########.fr       */
+/*   Updated: 2024/12/07 23:43:03 by mcogne--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 # define SERVER_H
 
 # include "mini_talk.h"
-# include <signal.h>
-# define NAME YELLOW BOLD "[server] " C_RESET
 
 /*******************************/
 /*           SERVER            */
 /*******************************/
+
+# define NAME YELLOW BOLD "[server] " C_RESET
 
 #endif
