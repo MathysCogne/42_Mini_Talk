@@ -29,6 +29,4 @@ cmake_install.cmake
 *.log
 
 # Customize Executable Makefile
-server
-client
 libft/
