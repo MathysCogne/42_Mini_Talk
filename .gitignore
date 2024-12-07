@@ -31,5 +31,4 @@ cmake_install.cmake
 # Customize Executable Makefile
 server
 client
-minilibx-linux/
 libft/
