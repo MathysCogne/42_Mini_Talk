@@ -64,5 +64,7 @@ make
 
 ```
 
+</br>
+
 ## Disclaimer
 > At 42 School, most projects must comply with the [Norm](https://github.com/42School/norminette/blob/master/pdf/en.norm.pdf).
