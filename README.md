@@ -37,6 +37,8 @@
   - Must send the string to the server
   - The server must display the string fairly quickly
 
+</br>
+
 ### Bonus Features:
 
 - **Server acknowledgment:** The server acknowledges every message received
@@ -50,17 +52,14 @@
 
 </br>
 
-```
-# 1. Compile both programs:
-
+```bash
+# Compile:
 make
 
-# 2. Start the server:
-
+# Start the server:
 ./server
 
-# 3. Send messages using the client:
-
+# Send messages using the client:
 ./client [SERVER_PID] "Your message here"
 
 ```
