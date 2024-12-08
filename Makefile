@@ -65,6 +65,8 @@ RED     := "\033[1;31m"
 GREEN   := "\033[1;32m"
 RESET   := "\033[0m"
 
+CLIENT_BUILD = $(OBJDIR)/.client_build
+SERVER_BUILD = $(OBJDIR)/.server_build
 
 all: $(OBJDIR) $(LIBFT) $(CLIENT_NAME) $(SERVER_NAME)
 
@@ -74,9 +76,12 @@ $(NAME): all
 #	CLIENT								#
 #########################################
 
-$(CLIENT_NAME): $(CLIENT_OBJ) $(LIBFT)
+$(CLIENT_NAME): $(CLIENT_BUILD)
+
+$(CLIENT_BUILD): $(CLIENT_OBJ) $(LIBFT)
 	$(V)$(CC) $(CFLAGS) $(LDFLAGS) $(CLIENT_OBJ) $(LIBS) -o $(CLIENT_NAME)
-	$(V)echo $(GREEN)"[$(CLIENT_NAME)] Executable created ✅"$(RESET)
+	@$(V)echo $(GREEN)"[$(CLIENT_NAME)] Executable created ✅"$(RESET)
+	@touch $@
 
 $(CLIENT_OBJDIR)/%.o: $(CLIENT_SRCDIR)/%.c | $(CLIENT_OBJDIR)
 	$(V)mkdir -p $(dir $@)
@@ -86,9 +91,12 @@ $(CLIENT_OBJDIR)/%.o: $(CLIENT_SRCDIR)/%.c | $(CLIENT_OBJDIR)
 #	SERVER								#
 #########################################
 
-$(SERVER_NAME): $(SERVER_OBJ) $(LIBFT)
+$(SERVER_NAME): $(SERVER_BUILD)
+
+$(SERVER_BUILD): $(SERVER_OBJ) $(LIBFT)
 	$(V)$(CC) $(CFLAGS) $(LDFLAGS) $(SERVER_OBJ) $(LIBS) -o $(SERVER_NAME)
-	$(V)echo $(GREEN)"[$(SERVER_NAME)] Executable created ✅"$(RESET)
+	@$(V)echo $(GREEN)"[$(SERVER_NAME)] Executable created ✅"$(RESET)
+	@touch $@
 
 $(SERVER_OBJDIR)/%.o: $(SERVER_SRCDIR)/%.c | $(SERVER_OBJDIR)
 	$(V)mkdir -p $(dir $@)
@@ -112,24 +120,27 @@ SERVER_DEP = $(SERVER_OBJ:.o=.d)
 -include $(CLIENT_DEP)
 -include $(SERVER_DEP)
 
+bonus: all
+
 # Libft - Branch 'V.mini_talk_07_12_2024' (No Update before push projet)
 $(LIBFT):
-	$(V)echo '[$(NAME)] Downloading my Libft from github.com...'$(RESET)
+	@$(V)echo '[$(NAME)] Downloading my Libft from github.com...'$(RESET)
 	$(V)@git clone --branch V.mini_talk_07_12_2024 https://github.com/MathysCogne/MyLibft_GNL_Printf.git libft > /dev/null 2>&1
-	$(V)echo '[$(NAME)] Compiling Libft...'$(RESET)
+	@$(V)echo '[$(NAME)] Compiling Libft...'$(RESET)
 	$(V)$(MAKE) --silent -C $(LIBFT_DIR)
-	$(V)echo '[$(NAME)] Libft build successfully'
+	@$(V)echo '[$(NAME)] Libft build successfully'
 
 # Clean Rules
 clean:
-	$(V)echo $(RED)'[$(NAME)] Cleaning objects'$(RESET)
+	@$(V)echo $(RED)'[$(NAME)] Cleaning objects'$(RESET)
 	$(V)rm -rf $(OBJDIR)
+	$(V)rm -f $(CLIENT_BUILD) $(SERVER_BUILD)
 
 fclean: clean
-	$(V)echo $(RED)'[$(NAME)] Cleaning all files'$(RESET)
+	@$(V)echo $(RED)'[$(NAME)] Cleaning all files'$(RESET)
 	$(V)rm -f $(CLIENT_NAME) $(SERVER_NAME)
 	$(V)$(MAKE) --silent -C $(LIBFT_DIR) fclean
-	$(V)echo $(RED)'[libft] Remove directory'$(RESET)
+	@$(V)echo $(RED)'[libft] Remove directory'$(RESET)
 	@rm -rf $(LIBFT_DIR)
 
 re: fclean all
