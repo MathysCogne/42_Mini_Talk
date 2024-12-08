@@ -6,7 +6,7 @@
 /*   By: mcogne-- <mcogne--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 17:48:46 by mcogne--          #+#    #+#             */
-/*   Updated: 2024/12/08 00:32:51 by mcogne--         ###   ########.fr       */
+/*   Updated: 2024/12/08 13:18:15 by mcogne--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	build_string(char c, siginfo_t *info)
 	}
 	if (c == '\0')
 	{
-		ft_printf(NAME "New message, by %d: %s\n", info->si_pid, str);
+		ft_printf(Y B NAME R "New message, by %d: %s\n", info->si_pid, str);
 		free(str);
 		str = NULL;
 		kill(info->si_pid, SIGUSR2);
@@ -66,11 +66,11 @@ int	main(int argc, char **argv)
 	(void)argv;
 	if (argc > 1)
 	{
-		ft_put_error(NAME "Program not take args. Please use: ./server\n");
+		ft_put_error(Y B NAME R "Program not take args. Please use: ./server\n");
 		return (1);
 	}
-	ft_printf(NAME "Hi 👋\n");
-	ft_printf(NAME "My PID is, " BOLD CYAN "%d\n", getpid());
+	ft_printf(Y B NAME R "Hi 👋\n");
+	ft_printf(Y B NAME R "My PID is, " B C "%d\n", getpid());
 	set_signal_action();
 	while (1)
 		pause();

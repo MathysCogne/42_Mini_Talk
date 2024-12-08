@@ -6,7 +6,7 @@
 /*   By: mcogne-- <mcogne--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 17:48:49 by mcogne--          #+#    #+#             */
-/*   Updated: 2024/12/08 01:14:38 by mcogne--         ###   ########.fr       */
+/*   Updated: 2024/12/08 13:21:12 by mcogne--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	signal_handler(int signum, siginfo_t *info, void *context)
 	if (signum == SIGUSR1)
 		g_received = 1;
 	else if (signum == SIGUSR2)
-		ft_printf(NAME "Receipt notice ! Your message has been received.\n");
+		ft_printf(Y B NAME R "Receipt notice ! "
+			"Your message has been received.\n");
 }
 
 static void	send_bit_to_server(size_t pid, char *bit)
@@ -47,7 +48,7 @@ void	client(size_t pid, char *str)
 {
 	size_t	i;
 
-	ft_printf(NAME "Send to %d: %s\n", pid, str);
+	ft_printf(Y B NAME R "Send to %d: %s\n", pid, str);
 	i = 0;
 	while (i <= ft_strlen(str))
 	{
@@ -60,17 +61,20 @@ int	main(int argc, char **argv)
 {
 	if (argc != 3)
 	{
-		ft_put_error(NAME "Program takes two args. Please use: ./client [PID SERVER] [MESSAGE]\n");
+		ft_put_error(Y B NAME R "Program takes two args. Please use:"
+			"./client [PID SERVER] [MESSAGE]\n");
 		return (1);
 	}
 	if (!argv[2] || argv[2][0] == '\0')
 	{
-		ft_put_error(NAME "Message is empty. Please use: ./client [PID] [STR]\n");
+		ft_put_error(Y B NAME R "Message is empty. Please use: "
+			"./client [PID] [STR]\n");
 		return (1);
 	}
 	if (ft_atoi(argv[1]) <= 0 || kill(ft_atoi(argv[1]), 0))
 	{
-		ft_put_error(NAME "Invalid PID. Please use: ./client [PID SERVER] [MESSAGE]\n");
+		ft_put_error(Y B NAME R "Invalid PID. Please use: "
+			" ./client [PID SERVER] [MESSAGE]\n");
 		return (1);
 	}
 	set_signal_action();

@@ -6,7 +6,7 @@
 /*   By: mcogne-- <mcogne--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 12:45:11 by mcogne--          #+#    #+#             */
-/*   Updated: 2024/12/07 23:53:33 by mcogne--         ###   ########.fr       */
+/*   Updated: 2024/12/08 13:16:22 by mcogne--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,9 @@ void	signal_handler(int signum, siginfo_t *info, void *context);
 /*******************************/
 /*           COLORS            */
 /*******************************/
-# define RED "\033[31m"
-# define GREEN "\033[32m"
-# define YELLOW "\033[33m"
-# define CYAN "\033[36m"
-# define BOLD "\033[1m"
-# define C_RESET "\033[0m"
+# define Y "\033[33m"
+# define C "\033[36m"
+# define B "\033[1m"
+# define R "\033[0m"
 
 #endif
